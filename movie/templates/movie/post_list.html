@@ -1,0 +1,15 @@
+<html>
+<body>
+    <div>
+        <h1><a href="/">Movie Recommendation</a></h1>
+    </div>
+    
+    {% for post in posts %}
+        <div>
+            <p>publicado em: {{ post.published_date }}</p>
+            <h1><a href="">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
