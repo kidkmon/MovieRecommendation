@@ -1,9 +1,15 @@
 {% extends 'movie/base.html' %}
 
 {% block content %}
-    <h1>Nova postagem</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+    <div class="container-fluid">
+        <h1>Gêneros</h1>
+        <ul>
+            {% for genre in genres %}
+                <div class="date">
+                    <h3><li>{{genre.name}}</li></h3>
+                </div>
+            {% endfor %}
+        </ul>
+        <br>
+    </div>
 {% endblock %}

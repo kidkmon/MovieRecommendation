@@ -1,13 +1,35 @@
 {% extends 'movie/base.html' %}
 
 {% block content %}
-    {% for post in posts %}
-        <div class="post">
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-            <p>{{ post.text|linebreaksbr }}</p>
+    <style>
+        .img-center {
+            margin: 0 auto;
+        }
+        
+
+    </style>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header">Filmes Populares</h2>
         </div>
-    {% endfor %}
+    
+        {% if not movies %}
+        <strong>
+            <h3 style="text-align: center;">Não foi possível carregar a lista de filmes. Desculpe o transtorno. <i class="fa fa-frown-o"
+                    aria-hidden="true"></i></h3>
+        </strong>
+        {% endif %}
+        {% for movie in movies %}
+        <div class="col-lg-4 col-sm-6 text-center">
+            <a href="{% url 'post_detail' pk=movie.id %}">
+                <img class="img-responsive img-center" style="width: 70%; height: 50%; border-radius: 10px;" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+                    alt="{{ movie.title }}">
+                <h3>{{ movie.title }}</h3>
+            </a>
+            <br />
+            <br />
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

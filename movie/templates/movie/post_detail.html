@@ -1,16 +1,100 @@
 {% extends 'movie/base.html' %}
 
 {% block content %}
-<div class="post">
-    {% if post.published_date %}
-    <div class="date">
-        {{ post.published_date }}
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .bg {
+            /* The image used */
+            background-image: url("https://image.tmdb.org/t/p/original{{ movie.backdrop_path }}");
+
+            /* Full height */
+            height: 65%;
+            margin-top: 0%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+    </style>
+    <div class="container">
+        <div class="bg"></div>
+        <div class="post">
+            <h1><a href="">{{ movie.title }}</a></h1>
+            <div class="date">
+                <h3>Data de lançamento: {{ movie.release_date }}</h3>
+            </div>
+            <br>
+            <h2>Sinopse</h2>
+            <p align="justify" style="font-family: 'Helvetica'">{{ movie.overview|linebreaksbr }}</p>
+            <br>
+            <h2>Gêneros</h2>
+            <ul>
+                {% for genre in movie.genres %}
+                    <li>{{ genre.name }}</li>
+                {% endfor %}
+            </ul>
+            <br>
+            <h2>Produtoras</h2>
+            <ul>
+                {% for companie in movie.production_companies %}
+                    <li>{{ companie.name }}</li>
+                {% endfor %}
+            </ul>
+            <br>
+            <h2>Avaliação dos usuários</h2>
+            <div class="date">
+                <h3>{{ movie.vote_average }}</h3>
+            </div>
+            <br><br>
+
+            <h2>Filmes Recomendados</h2>
+            <div class="slideshow-container">
+                {% for recommend in movies_recommended %}
+                    <div class="mySlides fade">
+                        <a href="{% url 'post_detail' pk=recommend.id %}">
+                            <img src="https://image.tmdb.org/t/p/original{{ recommend.backdrop_path }}" style="width:70%;display: block;margin-left: auto;margin-right: auto">
+                            <div class="text">{{ recommend.title }}</div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            
+            <div style="text-align:center">
+                {% for recommend in movies_recommended %}
+                    <span class="dot"></span>
+                {% endfor %}
+            </div>
+
+        </div>
     </div>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-    {% endif %}
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.text|linebreaksbr }}</p>
-</div>
+
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+    </script>
+
 {% endblock %}

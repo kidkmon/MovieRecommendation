@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movie',
+    'tmdb',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+TMDB_API_KEY = '4b18bbdee3bc3569a9329c170cc6bd01'
+TMDB_BASE_URL = 'https://api.themoviedb.org/3/movie/'
